@@ -27,3 +27,14 @@ deploy:
     repo: rgoulter/evm-travis-builds
     branch: git-snapshot
   overwrite: true
+branches:
+  only:
+  - 24-2
+  - 24-3
+  - 24-4
+  - 24-5
+  - 25.1
+  - 25.2
+  - 25.3
+  - 26.1
+  - git-snapshot
