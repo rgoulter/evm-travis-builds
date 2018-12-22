@@ -10,5 +10,4 @@ addons:
       - libtool
       - texinfo
 script:
-  - cd docker
   - env VERSION=$TRAVIS_BRANCH bash build-emacs.sh
