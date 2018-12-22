@@ -1,13 +1,29 @@
 addons:
   apt:
     packages:
-      - autoconf
-      - autogen
-      - automake
-      - build-essential
-      - git
-      - libncurses5-dev
-      - libtool
-      - texinfo
+    - autoconf
+    - autogen
+    - automake
+    - build-essential
+    - git
+    - libncurses5-dev
+    - libtool
+    - texinfo
 script:
-  - env VERSION=$TRAVIS_BRANCH bash build-emacs.sh
+- export VERSION=$TRAVIS_BRANCH
+- bash build-emacs.sh
+before_deploy:
+  - git config --local user.name "Richard Goulter"
+  - git config --local user.email "richard.goulter@gmail.com"
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - git tag $TRAVIS_TAG
+deploy:
+  provider: releases
+  api_key:
+    secure: fcjCk0NuH3YpmGrFlrTqAA24LKqtoZmN4W+TZiWNE2Ny7UQXO9z3h8xvRe3XCw86XBtXvZoV1302/pLTHrUUXW2wXhApq1ndso6c1Rmii4fzZMBzC9OPgvZSAnJb0MAi9Rur3lA1ashZMmwXkxPssOFctni+UwDdfMYTwLHC7XIbUiaf6GvVQU/aR5frKrVwhuq5qgv0X3rplMFzBAEn0b9JzEUJ5WfhKYBO8h8k07Mocm4Bd0D+U0TP+yIBhsx9gTSOipKuahNwbitltLptx55kfv2P53JPPdWd1peckSYWpHGKdFMk1ZMbLeuPkAsDrnEZUQlhOvaQGiIANh25qBqNgpqVws2p/g7nYosxUIrzWUlVepw0XDN+33rjRgw+1uPA7LYudP7/WZQTkZ2VdLDXKmlJUFxByxOpIewSlNTey2Y3lvfQpa8C02obWXVJGm+unF6+mB7tXM+0I7KZ75Dmgwy+BVmJRy1dHtZQAjEVeockntkzr6JqFUMqWfkr8Lre6IGfT3GEkUYmlDZY51JmcHw/iLV7Ld0nrblsxCZVYHzMFovMBM5t+upNjYwn+vUKLM662/ONR8NPTqwnCj+ymfepdkNd2FoUEL0AnbZ8c+W2BGLceUOgJWc3mw3dZBpYAq7s7EqeBcuz0/fjU//zBsexQ9Ym6nBtqx66fX8=
+  file: /home/travis/emacs-$VERSION-travis.tar.gz
+  name: emacs-$VERSION-travis
+  on:
+    repo: rgoulter/evm-travis-builds
+    branch: git-snapshot
+  overwrite: true
