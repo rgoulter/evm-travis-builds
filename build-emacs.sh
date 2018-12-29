@@ -22,7 +22,3 @@ fi
 make bootstrap && \
 make install && \
 tar -C /tmp -czf ~/emacs-$VERSION-travis.tar.gz emacs-$VERSION-travis
-
-if [ "$VERSION" == "git-snapshot" ]; then
-  make check-expensive
-fi
