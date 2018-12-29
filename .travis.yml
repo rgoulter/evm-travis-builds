@@ -8,6 +8,7 @@ addons:
     - git
     - libncurses5-dev
     - libtool
+    - mercurial
     - texinfo
 script:
 - export VERSION=$TRAVIS_BRANCH
